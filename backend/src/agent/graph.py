@@ -33,8 +33,8 @@ from agent.utils import (
 
 load_dotenv()
 
-if os.getenv("DASHSCOPE_API_KEY") is None:
-    raise ValueError("DASHSCOPE_API_KEY is not set")
+if os.getenv("QWEN_API_KEY") is None:
+    raise ValueError("QWEN_API_KEY is not set")
 
 
 # Nodes
@@ -62,7 +62,7 @@ def generate_query(state: OverallState, config: RunnableConfig) -> QueryGenerati
         model=configurable.query_generator_model,
         temperature=1.0,
         max_retries=2,
-        api_key=os.getenv("DASHSCOPE_API_KEY"),
+        api_key=os.getenv("QWEN_API_KEY"),
         base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
     )
     structured_llm = llm.with_structured_output(SearchQueryList)
@@ -115,7 +115,7 @@ def web_research(state: WebSearchState, config: RunnableConfig) -> OverallState:
         temperature=0,
         max_retries=2,
         base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
-        api_key=os.getenv("DASHSCOPE_API_KEY"),
+        api_key=os.getenv("QWEN_API_KEY"),
     )
     response = llm.invoke(formatted_prompt)
     modified_text = response.content
@@ -159,7 +159,7 @@ def reflection(state: OverallState, config: RunnableConfig) -> ReflectionState:
         model=reasoning_model,
         temperature=1.0,
         max_retries=2,
-        api_key=os.getenv("DASHSCOPE_API_KEY"),
+        api_key=os.getenv("QWEN_API_KEY"),
         base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
     )
     result = llm.with_structured_output(Reflection).invoke(formatted_prompt)
@@ -239,7 +239,7 @@ def finalize_answer(state: OverallState, config: RunnableConfig):
         model=reasoning_model,
         temperature=0,
         max_retries=2,
-        api_key=os.getenv("DASHSCOPE_API_KEY"),
+        api_key=os.getenv("QWEN_API_KEY"),
         base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
     )
     result = llm.invoke(formatted_prompt)
