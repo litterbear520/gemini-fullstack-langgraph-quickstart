@@ -28,7 +28,7 @@ services:
       retries: 5
       interval: 5s
   langgraph-api:
-    image: Qwen-fullstack-langgraph
+    image: littlebear520/qwenllm:v2.0
     container_name: langgraph-api
     ports:
       - "8123:8000"
